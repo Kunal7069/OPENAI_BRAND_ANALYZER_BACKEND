@@ -13,8 +13,9 @@ st.markdown("See exactly how ChatGPT talks about your brand when customers ask q
 @st.cache_data
 def fetch_categories():
     try:
-        response = requests.get("http://127.0.0.1:8000/question-repository/categories")
+        response = requests.get("https://openai-brand-analyzer-backend.onrender.com/question-repository/categories")
         if response.status_code == 200:
+            print(response.json())
             return response.json().get("unique_categories", [])
         else:
             return []
@@ -45,7 +46,7 @@ with st.sidebar:
     all_required = all([brand_name.strip(), final_category.strip(), competitors.strip()])
     if st.button("📄 Load Smart Templates", disabled=not all_required):
         try:
-            res = requests.get("http://127.0.0.1:8000/question-repository").json()
+            res = requests.get("https://openai-brand-analyzer-backend.onrender.com/question-repository").json()
             competitors_list = [c.strip() for c in competitors.splitlines() if c.strip()]
             comp_str = ", ".join(competitors_list)
             matching = [q["question"] for q in res["questions"] if q["category"].lower() == final_category.lower()]
@@ -87,7 +88,7 @@ with st.sidebar:
 
 # --- Function: WebSocket Call ---
 async def fetch_answers_ws(questions):
-    uri = "ws://localhost:8000/ws/bulk-answer"
+    uri = "wss://openai-brand-analyzer-backend.onrender.com/ws/bulk-answer"
     total = len(questions)
     results = []
     progress_bar = st.progress(0, text="⏳ Waiting for responses...")
@@ -136,7 +137,7 @@ if st.button("🔵 Test Brand Visibility"):
                         {"question": item["question"], "answer": item["answer"]} for item in answers
                     ]
                 }
-                res = requests.post("http://127.0.0.1:8000/generate-analysis", json=payload)
+                res = requests.post("https://openai-brand-analyzer-backend.onrender.com/generate-analysis", json=payload)
                 if res.status_code == 200:
                     st.session_state.analysis = res.json()
                 else:
