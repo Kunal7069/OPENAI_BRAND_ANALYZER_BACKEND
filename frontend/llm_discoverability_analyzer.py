@@ -18,7 +18,7 @@ components.html(
 # --- Page Setup ---
 st.set_page_config(page_title="LLM Discoverability Analyzer", layout="wide")
 st.title("🔍 LLM Discoverability Analyzer")
-st.markdown("See exactly how ChatGPT talks about your brand when customers ask questions")
+st.markdown("See exactly how ChatGPT talks about your brand when customers ask question")
 
 @st.cache_data
 def fetch_categories():
