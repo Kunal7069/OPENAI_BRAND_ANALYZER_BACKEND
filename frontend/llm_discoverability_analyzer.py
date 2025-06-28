@@ -5,6 +5,16 @@ import asyncio
 import websockets
 import json
 
+import streamlit.components.v1 as components
+
+# Inject Google Search Console verification tag
+components.html(
+    """
+    <meta name="google-site-verification" content="ItJqOVHxQp1ydGsNkhS3h0DvzNl3LG3LnxA4UpQU4-Q" />
+    """,
+    height=0,
+)
+
 # --- Page Setup ---
 st.set_page_config(page_title="LLM Discoverability Analyzer", layout="wide")
 st.title("🔍 LLM Discoverability Analyzer")
