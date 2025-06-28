@@ -5,15 +5,8 @@ import asyncio
 import websockets
 import json
 
-import streamlit.components.v1 as components
-
-# Inject Google Search Console verification tag
-components.html(
-    """
-    <meta name="google-site-verification" content="ItJqOVHxQp1ydGsNkhS3h0DvzNl3LG3LnxA4UpQU4-Q" />
-    """,
-    height=0,
-)
+if st.query_params.get("gsc") == "google1192ae5fb1157ea1":
+    st.write("google-site-verification: google1192ae5fb1157ea1.html")
 
 # --- Page Setup ---
 st.set_page_config(page_title="LLM Discoverability Analyzer", layout="wide")
